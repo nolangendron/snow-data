@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-import { DropDown } from './components/DropDown';
+import { CurrentWeather } from './components/CurrentWeather';
 
 function App() {
 
   return (
     <div>
-      <DropDown />
+      <CurrentWeather />
     </div>
 
   );
