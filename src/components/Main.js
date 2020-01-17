@@ -1,7 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { StationDetails } from "./StationDetails";
+import React, { useEffect, useState } from 'react';
+import styled from "@emotion/styled";
+import size from "../styles/size";
+import colors from '../styles/colors';
+import { StationDetails } from '../components/StationDetails';
 
-export const CurrentWeather = () => {
+const Container = styled("main")`
+    flex: 1;
+    grid-area: main;
+    padding: ${size.spacing};
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    background-color: ${colors.main};
+`
+const Dasboard = styled("div")`
+  --column-count: 2;
+  display: grid;
+  grid-template-columns: repeat(var(--column-count), 1fr);
+  grid-gap: ${size.spacing};
+`
+const Item = styled("div")`
+   flex: 1 1 50%;
+    grid-column-end: span 2;
+    padding: calc(var(${size.spacing}) / 2);
+`
+const Card = styled("div")`
+  height: 100%;
+  padding: 1rem;
+  font-size: 2rem;
+  font-weight: 300;
+  background-color: ${colors.card};
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+`
+const ItemFull = styled("div")`
+flex-basis: 100%;
+grid-column: 1 / -1;
+`
+
+const Col = styled("div")`
+  --column-count: 2;
+  flex-basis: calc(100% / var(--column-count));
+  grid-column-end: span 1;
+`
+
+export const Main = () => {
   const [coqSummitStationData, setCoqSummitStationData] = useState([]);
   const [littleBearStationData, setLittleBearStationData] = useState([]);
   const [newSnow, setNewSnow] = useState({
@@ -78,19 +121,40 @@ export const CurrentWeather = () => {
   const littleBearSnowDepth = littleBearStation && littleBearStation.snowHeight;
 
   return (
-    <div>
-      <StationDetails
-        name={coqSummitName}
-        elevation={coqSummitElevation}
-        temp={coqSummitTemp}
-        newSnow={coqSummitNewSnow}
-        snowDepth={coqSummitSnowDepth} />
-      <StationDetails
-        name={littleBearName}
-        elevation={littleBearElevation}
-        temp={littleBearTemp}
-        newSnow={littleBearNewSnow}
-        snowDepth={littleBearSnowDepth} />
-    </div>
+    <Container>
+      <Dasboard>
+        <Col>
+          <Card>
+            <StationDetails
+              name={coqSummitName}
+              elevation={coqSummitElevation}
+              temp={coqSummitTemp}
+              newSnow={coqSummitNewSnow}
+              snowDepth={coqSummitSnowDepth} />
+          </Card>
+        </Col>
+        <Col>
+          <Card>
+            <StationDetails
+              name={littleBearName}
+              elevation={littleBearElevation}
+              temp={littleBearTemp}
+              newSnow={littleBearNewSnow}
+              snowDepth={littleBearSnowDepth} />
+          </Card>
+        </Col>
+        <Col>
+          <Card>Coq Chart</Card>
+        </Col>
+        <Col>
+          <Card>Bear Chart</Card>
+        </Col>
+        <Item>
+          <Card>
+            <strong>Map</strong>
+          </Card>
+        </Item>
+      </Dasboard >
+    </Container >
   )
 }
