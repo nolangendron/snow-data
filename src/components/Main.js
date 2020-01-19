@@ -5,6 +5,8 @@ import colors from '../styles/colors';
 import { StationDetails } from '../components/StationDetails';
 import { calNewSnowLastDay } from '../utils/calNewSnowLastDay';
 import { Chart } from '../components/Chart';
+import littleBearData from '../data/littleBearData.json';
+import coqSummitData from '../data/coqSummitData.json';
 
 const Container = styled("main")`
     flex: 1;
@@ -53,9 +55,24 @@ export const Main = () => {
   const [coqSummitStationData, setCoqSummitStationData] = useState([]);
   const [littleBearStationData, setLittleBearStationData] = useState([]);
   const [newSnow, setNewSnow] = useState({
-    coqSummit: null,
-    littleBear: null
+    coqSummitLastDay: null,
+    coqSummitLastTwoDay: null,
+    coqSummitLastWeek: null,
+    littleBearLastDay: null,
+    littleBearLastTwoDay: null,
+    littleBearLastWeek: null,
   });
+  const [historicSnowData, setHistoricSnowData] = useState(
+    {
+      data: {
+        labels: [],
+        datasets: [
+          { label: "", fill: false, backgroundColor: "", data: [] },
+          { label: "", fill: false, backgroundColor: "", data: [] }
+        ]
+      }
+    }
+  )
   useEffect(() => {
     const getWeather = async (station) => {
 
@@ -74,6 +91,7 @@ export const Main = () => {
       const url = `https://wx.avalanche.ca/stations/${station}/measurements/`;
       const response = await fetch(url);
       const data = await response.json();
+      console.log(data)
       setLittleBearStationData(data)
     }
     getWeather(17);
@@ -88,27 +106,77 @@ export const Main = () => {
     const newSnowLitBear = lastDaySnowLitBea.map((day) => {
       return day.snowHeight;
     })
+    const lastTwoDaySnowCoqSum = coqSummitStationData.slice(0, 47);
+    const newTwoDaySnowCoqSum = lastTwoDaySnowCoqSum.map((day) => {
+      return day.snowHeight;
+    })
+    const lastTwoDaySnowLitBea = littleBearStationData.slice(0, 47);
+    const newTwoDaySnowLitBear = lastTwoDaySnowLitBea.map((day) => {
+      return day.snowHeight;
+    })
+    const lastWeekSnowCoqSum = coqSummitStationData.slice(0, 160);
+    const newLastWeekSnowCoqSum = lastWeekSnowCoqSum.map((day) => {
+      return day.snowHeight;
+    })
+    const lastWeekSnowLitBea = littleBearStationData.slice(0, 160);
+    const newLastWeekSnowLitBear = lastWeekSnowLitBea.map((day) => {
+      return day.snowHeight;
+    })
 
     const getNewSnowCoqSum = calNewSnowLastDay(newSnowCoqSum);
-    const getNewSnowLitBea = calNewSnowLastDay(newSnowLitBear)
+    const getNewSnowLitBea = calNewSnowLastDay(newSnowLitBear);
+    const getNewTwoSnowCoqSum = calNewSnowLastDay(newTwoDaySnowCoqSum);
+    const getNewTwoSnowLitBea = calNewSnowLastDay(newTwoDaySnowLitBear);
+    const getNewLastWeekSnowCoqSum = calNewSnowLastDay(newLastWeekSnowCoqSum);
+    const getNewLastWeekSnowLitBea = calNewSnowLastDay(newLastWeekSnowLitBear);
     const sumNewSnowCoq = getNewSnowCoqSum.reduce((a, b) => a + b, 0);
     const sumNewSnowLitBea = getNewSnowLitBea.reduce((a, b) => a + b, 0);
+    const sumNewTwoDaySnowCoq = getNewTwoSnowCoqSum.reduce((a, b) => a + b, 0);
+    const sumNewTwoDaySnowLitBea = getNewTwoSnowLitBea.reduce((a, b) => a + b, 0);
+    const sumNewLastWeekSnowCoq = getNewLastWeekSnowCoqSum.reduce((a, b) => a + b, 0);
+    const sumNewLastWeekSnowLitBea = getNewLastWeekSnowLitBea.reduce((a, b) => a + b, 0);
 
-    setNewSnow({ coqSummit: sumNewSnowCoq, littleBear: sumNewSnowLitBea });
+    setNewSnow({ coqSummitLastDay: sumNewSnowCoq, coqSummitLastTwoDay: sumNewTwoDaySnowCoq, coqSummitLastWeek: sumNewLastWeekSnowCoq, littleBearLastDay: sumNewSnowLitBea, littleBearLastTwoDay: sumNewTwoDaySnowLitBea, littleBearLastWeek: sumNewLastWeekSnowLitBea });
   }, [coqSummitStationData, littleBearStationData])
 
+  useEffect(() => {
+    const getSnowPackData = (arr) => {
+      const dataArray = [];
+      const dateArray = [];
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].date.charAt(11) === "2" && arr[i].date.charAt(12) === "3") {
+          dateArray.push(arr[i].date.slice(0, 10))
+          dataArray.push(arr[i].snowpack);
+        }
+      }
+      return { dataArray, dateArray };
+    };
+    const littleBearSnowData = getSnowPackData(littleBearData);
+    const coqSummitSnowData = getSnowPackData(coqSummitData);
+    setHistoricSnowData({
+      data: {
+        labels: coqSummitSnowData.dateArray,
+        datasets: [{ label: "1220m", backgroundColor: "#50D8D7", data: coqSummitSnowData.dataArray }, { label: "1660m", backgroundColor: "#547AA5", data: littleBearSnowData.dataArray }]
+      }
+    })
+  }, [])
+
   const coqSummitName = "Coquihalla Summit";
-  const coqSummitElevation = "Elevation: 1230 m"
-  const coqSummitStation = coqSummitStationData && coqSummitStationData[1];
+  const coqSummitElevation = "1230 m"
+  const coqSummitStation = coqSummitStationData && coqSummitStationData[0];
   const coqSummitTemp = coqSummitStation && coqSummitStation.airTempAvg;
-  const coqSummitNewSnow = newSnow && newSnow.coqSummit;
+  const coqSummitNewSnowLastDay = newSnow && newSnow.coqSummitLastDay;
+  const coqSummitNewSnowLastTwoDay = newSnow && newSnow.coqSummitLastTwoDay;
+  const coqSummitNewSnowLastWeek = newSnow && newSnow.coqSummitLastWeek;
   const coqSummitSnowDepth = coqSummitStation && coqSummitStation.snowHeight;
 
   const littleBearName = "Little Bear";
-  const littleBearElevation = "Elevation: 1660 m"
-  const littleBearStation = littleBearStationData && littleBearStationData[1];
+  const littleBearElevation = "1660 m"
+  const littleBearStation = littleBearStationData && littleBearStationData[0];
   const littleBearTemp = littleBearStation && littleBearStation.airTempAvg;
-  const littleBearNewSnow = newSnow && newSnow.littleBear;
+  const littleBearNewSnowLastDay = newSnow && newSnow.littleBearLastDay;
+  const littleBearNewSnowTwoDay = newSnow && newSnow.littleBearLastTwoDay;
+  const littleBearNewSnowLastWeek = newSnow && newSnow.littleBearLastWeek;
   const littleBearSnowDepth = littleBearStation && littleBearStation.snowHeight;
 
   return (
@@ -120,7 +188,9 @@ export const Main = () => {
               name={coqSummitName}
               elevation={coqSummitElevation}
               temp={coqSummitTemp}
-              newSnow={coqSummitNewSnow}
+              newSnowLastDay={coqSummitNewSnowLastDay}
+              newSnowLastTwoDay={coqSummitNewSnowLastTwoDay}
+              newSnowLastWeek={coqSummitNewSnowLastWeek}
               snowDepth={coqSummitSnowDepth} />
           </div>
         </div>
@@ -130,7 +200,9 @@ export const Main = () => {
               name={littleBearName}
               elevation={littleBearElevation}
               temp={littleBearTemp}
-              newSnow={littleBearNewSnow}
+              newSnowLastDay={littleBearNewSnowLastDay}
+              newSnowLastTwoDay={littleBearNewSnowTwoDay}
+              newSnowLastWeek={littleBearNewSnowLastWeek}
               snowDepth={littleBearSnowDepth} />
           </div>
         </div>
@@ -146,7 +218,7 @@ export const Main = () => {
         </div>
         <div className="item-full">
           <div className="card">
-            <Chart />
+            <Chart data={historicSnowData.data} />
           </div>
         </div>
       </div >
