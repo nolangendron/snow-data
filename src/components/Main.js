@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from "@emotion/styled";
 import size from "../styles/size";
 import colors from '../styles/colors';
-import { StationDetails } from '../components/StationDetails';
+import { WeatherDetailsList } from './WeatherDetailsList';
+import { SnowDetails } from './SnowDetails';
 import { calNewSnowLastDay } from '../utils/calNewSnowLastDay';
 import { Chart } from '../components/Chart';
 import littleBearData from '../data/littleBearData.json';
@@ -18,32 +19,31 @@ const Container = styled("main")`
     background-color: ${colors.main};
 
     .dashboard {
-      --column-count: 4;
+      --column-count: 3;
       display: grid;
       grid-template-columns: repeat(var(--column-count), 1fr);
       grid-gap: ${size.spacing};
     }
 
     .column-item {
-      --column-count: 4;
+      --column-count: 3;
       flex-basis: calc(100%/var(--column-count));
       grid-column-end: span 1;
-    }
-
-    .card {
-      height: 100%;
-      padding: 1rem;
-      font-size: 2rem;
-      font-weight: 300;
-      background-color: ${colors.card};
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     .item-column {
       flex: 1 1 50%;
       grid-column-end: span 1;
       padding: calc(var(${size.spacing}) / 2);
+      border: 1px solid grey;
+    }
+
+    .item-half {
+      flex: 1 1 50%;
+      height: 270px;
+      grid-column-end: span 2;
+      padding: calc(var(${size.spacing}) / 2);
+      border: 1px solid grey;
     }
 
     .item-full {
@@ -91,7 +91,6 @@ export const Main = () => {
       const url = `https://wx.avalanche.ca/stations/${station}/measurements/`;
       const response = await fetch(url);
       const data = await response.json();
-      console.log(data)
       setLittleBearStationData(data)
     }
     getWeather(17);
@@ -162,7 +161,7 @@ export const Main = () => {
   }, [])
 
   const coqSummitName = "Coquihalla Summit";
-  const coqSummitElevation = "1230 m"
+  const coqSummitElevation = "1230m"
   const coqSummitStation = coqSummitStationData && coqSummitStationData[0];
   const coqSummitTemp = coqSummitStation && coqSummitStation.airTempAvg;
   const coqSummitNewSnowLastDay = newSnow && newSnow.coqSummitLastDay;
@@ -171,7 +170,7 @@ export const Main = () => {
   const coqSummitSnowDepth = coqSummitStation && coqSummitStation.snowHeight;
 
   const littleBearName = "Little Bear";
-  const littleBearElevation = "1660 m"
+  const littleBearElevation = "1660m"
   const littleBearStation = littleBearStationData && littleBearStationData[0];
   const littleBearTemp = littleBearStation && littleBearStation.airTempAvg;
   const littleBearNewSnowLastDay = newSnow && newSnow.littleBearLastDay;
@@ -183,38 +182,29 @@ export const Main = () => {
     <Container>
       <div className="dashboard">
         <div className="item-column">
-          <div className="card">
-            <StationDetails
-              name={coqSummitName}
-              elevation={coqSummitElevation}
-              temp={coqSummitTemp}
-              newSnowLastDay={coqSummitNewSnowLastDay}
-              newSnowLastTwoDay={coqSummitNewSnowLastTwoDay}
-              newSnowLastWeek={coqSummitNewSnowLastWeek}
-              snowDepth={coqSummitSnowDepth} />
-          </div>
+          {/* <div className="card"> */}
+          <WeatherDetailsList
+            highElevationName={littleBearName.toUpperCase()}
+            highElevation={littleBearElevation}
+            lowElevationName={coqSummitName.toUpperCase()}
+            lowElevation={coqSummitElevation}
+            highTemp={littleBearTemp}
+            lowTemp={coqSummitTemp} />
         </div>
-        <div className="item-column">
-          <div className="card">
-            <StationDetails
-              name={littleBearName}
-              elevation={littleBearElevation}
-              temp={littleBearTemp}
-              newSnowLastDay={littleBearNewSnowLastDay}
-              newSnowLastTwoDay={littleBearNewSnowTwoDay}
-              newSnowLastWeek={littleBearNewSnowLastWeek}
-              snowDepth={littleBearSnowDepth} />
-          </div>
-        </div>
-        <div className="item-column">
-          <div className="card">
-
-          </div>
-        </div>
-        <div className="item-column">
-          <div className="card">
-
-          </div>
+        <div className="item-half">
+          <SnowDetails
+            lowElevationName={coqSummitName}
+            lowElevation={coqSummitElevation}
+            newSnowLastDayCoq={coqSummitNewSnowLastDay}
+            newSnowLastTwoDayCoq={coqSummitNewSnowLastTwoDay}
+            newSnowLastWeekCoq={coqSummitNewSnowLastWeek}
+            snowDepthCoq={coqSummitSnowDepth}
+            highElevationName={littleBearName}
+            highElevation={littleBearElevation}
+            newSnowLastDayLit={littleBearNewSnowLastDay}
+            newSnowLastTwoDayLit={littleBearNewSnowTwoDay}
+            newSnowLastWeekLit={littleBearNewSnowLastWeek}
+            snowDepthLit={littleBearSnowDepth} />
         </div>
         <div className="item-full">
           <div className="card">

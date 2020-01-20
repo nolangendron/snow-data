@@ -1,5 +1,5 @@
 export default {
-  spacing: "1rem",
+  spacing: "4rem",
   headerHeight: '70px',
   footerHeight: '70px',
   navBarWidth: '250px',
