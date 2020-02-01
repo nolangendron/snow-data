@@ -46,7 +46,7 @@ p {
 }
 `
 
-export const WeatherDetailsList = ({ highElevationName, lowElevationName, highElevation, lowElevation, highTemp, lowTemp, newSnowLastDay, newSnowLastTwoDay, newSnowLastWeek, snowDepth }) => {
+export const WeatherDetailsList = ({ highElevationName, lowElevationName, highElevation, lowElevation, highTemp, lowTemp }) => {
   return (
     <Weather>
       <h2 className="line">

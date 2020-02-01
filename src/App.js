@@ -3,8 +3,8 @@ import './App.css';
 import styled from "@emotion/styled";
 import size from "../src/styles/size";
 import { Header } from "./components/Header";
-import { Main } from "./components/Main";
-import { NavBar } from "./components/NavBar";
+import Main from "./components/Main";
+import NavBar from "./components/NavBar";
 import { Footer } from "./components/Footer";
 // import { CurrentWeather } from './components/CurrentWeather';
 
@@ -18,7 +18,6 @@ grid-template-areas: "header header"
                      "footer footer";
 `
 function App() {
-
   return (
     <GridContainer>
       <Header />
@@ -26,7 +25,6 @@ function App() {
       <Main />
       <Footer />
     </GridContainer>
-
   );
 }
 

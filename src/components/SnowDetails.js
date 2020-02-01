@@ -48,7 +48,7 @@ p {
 }
 `
 
-export const SnowDetails = ({ lowElevationName, lowElevation, highElevationName, highElevation, newSnowLastDayCoq, newSnowLastTwoDayCoq, newSnowLastWeekCoq, snowDepthCoq, newSnowLastDayLit, newSnowLastTwoDayLit, newSnowLastWeekLit, snowDepthLit }) => {
+export const SnowDetails = ({ lowElevationName, lowElevation, highElevationName, highElevation, newSnowLastDayLower, newSnowLastTwoDayLower, newSnowLastWeekLower, snowDepthLower, newSnowLastDayUpper, newSnowLastTwoDayUpper, newSnowLastWeekUpper, snowDepthUpper }) => {
   return (
     <SnowDetailsList>
       <h2 className="title">Snow Conditions</h2>
@@ -65,16 +65,16 @@ export const SnowDetails = ({ lowElevationName, lowElevation, highElevationName,
         <p>Base</p>
       </ div>
       <div className="flex-item">
-        <h1>{newSnowLastDayLit}cm</h1>
+        <h1>{newSnowLastDayUpper}cm</h1>
       </ div>
       <div className="flex-item">
-        <h1>{newSnowLastTwoDayLit}cm</h1>
+        <h1>{newSnowLastTwoDayUpper}cm</h1>
       </ div>
       <div className="flex-item">
-        <h1>{newSnowLastWeekLit}cm</h1>
+        <h1>{newSnowLastWeekUpper}cm</h1>
       </ div>
       <div className="flex-item">
-        <h1>{snowDepthLit}cm</h1>
+        <h1>{snowDepthUpper}cm</h1>
       </ div>
       <h3 className="title">{lowElevationName} {lowElevation}</h3>
       <div className="flex-item">
@@ -89,16 +89,16 @@ export const SnowDetails = ({ lowElevationName, lowElevation, highElevationName,
         <p>Base</p>
       </ div>
       <div className="flex-item">
-        <h1>{newSnowLastDayCoq}cm</h1>
+        <h1>{newSnowLastDayLower}cm</h1>
       </ div>
       <div className="flex-item">
-        <h1>{newSnowLastTwoDayCoq}cm</h1>
+        <h1>{newSnowLastTwoDayLower}cm</h1>
       </ div>
       <div className="flex-item">
-        <h1>{newSnowLastWeekCoq}cm</h1>
+        <h1>{newSnowLastWeekLower}cm</h1>
       </ div>
       <div className="flex-item">
-        <h1>{snowDepthCoq}cm</h1>
+        <h1>{snowDepthLower}cm</h1>
       </ div>
 
     </SnowDetailsList>

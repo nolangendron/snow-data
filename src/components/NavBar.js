@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import size from '../styles/size';
 import colors from '../styles/colors';
+import { SET_CURRENT_AREA } from '../actions/area-action';
 
 const Container = styled("nav")`
 flex: 0 0 ${size.navBarWidth};
@@ -26,29 +28,37 @@ const MenuLink = styled("a")`
       background-color: #1f222d;
     }
 `
-export const NavBar = () => {
+
+const NavBar = ({ setCurrentArea }) => {
   return (
     <Container>
       <Menu>
         <MenuItem>
-          <MenuLink href="#">Dashboard</MenuLink>
+          <MenuLink id='coquihalla' onClick={(e) => setCurrentArea(e.target.id)}>Coquihalla</MenuLink>
         </MenuItem>
         <MenuItem>
-          <MenuLink href="#">Dashboard</MenuLink>
+          <MenuLink id='duffey' onClick={(e) => setCurrentArea(e.target.id)}>The Duffey</MenuLink>
         </MenuItem>
         <MenuItem>
-          <MenuLink href="#">Dashboard</MenuLink>
+          <MenuLink id='manning' onClick={(e) => setCurrentArea(e.target.id)}>Manning Park</MenuLink>
         </MenuItem>
         <MenuItem>
-          <MenuLink href="#">Dashboard</MenuLink>
-        </MenuItem>
-        <MenuItem>
-          <MenuLink href="#">Dashboard</MenuLink>
-        </MenuItem>
-        <MenuItem>
-          <MenuLink href="#">Dashboard</MenuLink>
+          <MenuLink id='rogerspass' onClick={(e) => setCurrentArea(e.target.id)}>Rogers Pass</MenuLink>
         </MenuItem>
       </Menu>
     </Container >
   )
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setCurrentArea(id) {
+      dispatch({
+        type: SET_CURRENT_AREA,
+        payload: { id }
+      })
+    }
+  }
 }
+
+export default connect(null, mapDispatchToProps)(NavBar);

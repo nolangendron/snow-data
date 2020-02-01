@@ -11,12 +11,12 @@ const Container = styled("header")`
     background-color: #fff;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     position: relative;
-`
+   `
 
 export const Header = () => {
   return (
     <Container>
-      <h1>I Skied the Coquihalla</h1>
+      <h1>BC Backcountry Weather Report</h1>
     </Container>
   )
 }
