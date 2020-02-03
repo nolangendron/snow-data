@@ -37,13 +37,10 @@ const NavBar = ({ setCurrentArea }) => {
           <MenuLink id='coquihalla' onClick={(e) => setCurrentArea(e.target.id)}>Coquihalla</MenuLink>
         </MenuItem>
         <MenuItem>
-          <MenuLink id='duffey' onClick={(e) => setCurrentArea(e.target.id)}>The Duffey</MenuLink>
+          <MenuLink id='duffey' onClick={(e) => setCurrentArea(e.target.id)}>Duffey</MenuLink>
         </MenuItem>
         <MenuItem>
           <MenuLink id='manning' onClick={(e) => setCurrentArea(e.target.id)}>Manning Park</MenuLink>
-        </MenuItem>
-        <MenuItem>
-          <MenuLink id='rogerspass' onClick={(e) => setCurrentArea(e.target.id)}>Rogers Pass</MenuLink>
         </MenuItem>
       </Menu>
     </Container >

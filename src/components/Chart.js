@@ -10,7 +10,7 @@ export const Chart = ({ data }) => {
         options={{
           title: {
             display: true,
-            text: "Snow Depth for the Coquihalla Area"
+            text: "Season Snowfall"
           }
         }
         } />

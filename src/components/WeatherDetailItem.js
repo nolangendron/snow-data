@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
+
 const Weather = styled("div")` 
 margin: 20px auto;
 width: 240px;
@@ -51,6 +52,7 @@ export const WeatherDetailItem = ({ highElevationName, lowElevationName, highEle
       <h2 className="line">
         <span>Today's Weather</span>
       </h2>
+
       <ul className="list-weather">
         <li>
           <div className="cell">
@@ -75,6 +77,7 @@ export const WeatherDetailItem = ({ highElevationName, lowElevationName, highEle
           </div>
         </li>
       </ul>
+
     </Weather >
   )
 }

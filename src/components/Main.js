@@ -7,10 +7,7 @@ import { WeatherDetailsList } from './WeatherDetailsList';
 import { SnowDetails } from './SnowDetails';
 import { calNewSnowLastDay } from '../utils/calNewSnowLastDay';
 import { Chart } from '../components/Chart';
-import { data } from '../data/index';
 import { stationNumbers } from '../data/weatherStationDetails';
-
-const { littleBearData, coqSummitData, cayooshSummitData, blowDownMidData } = data;
 
 const Container = styled("main")`
     flex: 1;
@@ -38,15 +35,13 @@ const Container = styled("main")`
       flex: 1 1 50%;
       grid-column-end: span 1;
       padding: calc(var(${size.spacing}) / 2);
-      border: 1px solid grey;
     }
 
     .item-half {
       flex: 1 1 50%;
-      height: 270px;
+      height: 310px;
       grid-column-end: span 2;
       padding: calc(var(${size.spacing}) / 2);
-      border: 1px solid grey;
     }
 
     .item-full {
@@ -86,6 +81,7 @@ const Main = (props) => {
       const url = `https://wx.avalanche.ca/stations/${station}/measurements/`;
       const response = await fetch(url);
       const data = await response.json();
+      console.log(data)
       setLowerStationData(data);
     }
 
@@ -158,6 +154,8 @@ const Main = (props) => {
 
   const lowerSeasonData = name && stationNumbers[name].seasonDataLower;
   const upperSeasonData = name && stationNumbers[name].seasonDataUpper;
+  const lowerLabel = name && stationNumbers[name].elevationLower;
+  const upperLabel = name && stationNumbers[name].elevationUpper;
   useEffect(() => {
     const getSnowPackData = (arr) => {
       const dataArray = [];
@@ -177,18 +175,18 @@ const Main = (props) => {
         labels: lowerSnowData.dateArray,
         datasets: [
           {
-            label: "1220m",
+            label: lowerLabel,
             backgroundColor: "#50D8D7",
             data: lowerSnowData.dataArray
           },
           {
-            label: "1660m",
+            label: upperLabel,
             backgroundColor: "#547AA5",
             data: upperSnowData.dataArray
           }]
       }
     })
-  }, [lowerSeasonData, upperSeasonData])
+  }, [lowerLabel, lowerSeasonData, upperLabel, upperSeasonData])
 
   const lowerStationName = name && stationNumbers[name].nameLower;
   const lowerStationElevation = name && stationNumbers[name].elevationLower;
@@ -214,9 +212,9 @@ const Main = (props) => {
         <div className="item-column">
           {/* <div className="card"> */}
           <WeatherDetailsList
-            highElevationName={upperStationName.toUpperCase()}
+            highElevationName={upperStationName}
             highElevation={upperStationElevation}
-            lowElevationName={lowerStationName.toUpperCase()}
+            lowElevationName={lowerStationName}
             lowElevation={lowerStationElevation}
             highTemp={upperStationTemp}
             lowTemp={lowerStationTemp} />

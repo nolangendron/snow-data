@@ -1,6 +1,6 @@
 import { data } from './index';
 
-const { littleBearData, coqSummitData, cayooshSummitData, blowDownMidData } = data;
+const { littleBearData, coqSummitData, cayooshSummitData, blowDownMidData, foundationMinesData, allisonPassData, abbottData, rogersPassData } = data;
 
 export const stationNumbers = {
   coquihalla: {
@@ -29,7 +29,9 @@ export const stationNumbers = {
     nameUpper: "Foundation Mines",
     elevationUpper: "1650m",
     lower: 73,
-    upper: 13
+    upper: 13,
+    seasonDataLower: allisonPassData,
+    seasonDataUpper: foundationMinesData
   },
   rogerspass: {
     nameLower: "Rogers Pass",
@@ -37,6 +39,8 @@ export const stationNumbers = {
     nameUpper: "Abbott",
     elevationUpper: "2130m",
     lower: 98,
-    upper: 91
+    upper: 91,
+    seasonDataLower: rogersPassData,
+    seasonDataUpper: abbottData
   }
 };

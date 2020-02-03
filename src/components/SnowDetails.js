@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSnowflake } from '@fortawesome/free-solid-svg-icons';
 
 const SnowDetailsList = styled("div")`
 display: flex;
@@ -8,6 +10,8 @@ flex-direction: row;
 flex-wrap: wrap;
 justify-content: space-around;
 align-content: center;
+background: #fff;
+box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
 
 h1{
   margin: 0;
@@ -23,9 +27,7 @@ h2 {
   margin: 0 0 25px;
   text-transform: uppercase;
 }
-h2{
-  margin: 0;
-}
+
 h3 {
   margin: 0 0 10px 0;
   font-size: 1em;
@@ -51,7 +53,7 @@ p {
 export const SnowDetails = ({ lowElevationName, lowElevation, highElevationName, highElevation, newSnowLastDayLower, newSnowLastTwoDayLower, newSnowLastWeekLower, snowDepthLower, newSnowLastDayUpper, newSnowLastTwoDayUpper, newSnowLastWeekUpper, snowDepthUpper }) => {
   return (
     <SnowDetailsList>
-      <h2 className="title">Snow Conditions</h2>
+      <h2 className="title">Snow Conditions</h2><FontAwesomeIcon icon={faSnowflake} size='3x' color='#505865' />
       <h3 className="title">{highElevationName} {highElevation}</h3>
       <div className="flex-item">
         <p>24hr</p>
