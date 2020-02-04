@@ -8,6 +8,7 @@ import { SnowDetails } from './SnowDetails';
 import { calNewSnowLastDay } from '../utils/calNewSnowLastDay';
 import { Chart } from '../components/Chart';
 import { stationNumbers } from '../data/weatherStationDetails';
+import { WindChart } from './WindChart';
 
 const Container = styled("main")`
     flex: 1;
@@ -35,11 +36,12 @@ const Container = styled("main")`
       flex: 1 1 50%;
       grid-column-end: span 1;
       padding: calc(var(${size.spacing}) / 2);
+      height: 320px;
     }
 
     .item-half {
       flex: 1 1 50%;
-      height: 310px;
+      height: 320px;
       grid-column-end: span 2;
       padding: calc(var(${size.spacing}) / 2);
     }
@@ -62,6 +64,12 @@ const Main = (props) => {
     upperStationLastTwoDay: null,
     upperStationLastWeek: null,
   });
+  const [wind, setWind] = useState({
+    upperStationWindDirection: [],
+    upperStationWindSpeed: [],
+    lowerStationWindDirection: [],
+    lowerStationWindSpeed: []
+  })
   const [historicSnowData, setHistoricSnowData] = useState(
     {
       data: {
@@ -81,7 +89,7 @@ const Main = (props) => {
       const url = `https://wx.avalanche.ca/stations/${station}/measurements/`;
       const response = await fetch(url);
       const data = await response.json();
-      console.log(data)
+      console.log("lower", data)
       setLowerStationData(data);
     }
 
@@ -96,6 +104,8 @@ const Main = (props) => {
       const url = `https://wx.avalanche.ca/stations/${station}/measurements/`;
       const response = await fetch(url);
       const data = await response.json();
+      console.log("upper", data)
+
       setUpperStationData(data)
     }
 
@@ -206,6 +216,31 @@ const Main = (props) => {
   const upperStationNewSnowLastWeek = newSnow && newSnow.upperStationLastWeek;
   const upperStationSnowDepth = upperStation && upperStation.snowHeight;
 
+  useEffect(() => {
+    const lastTwoDayWindUpperStation = upperStationData.slice(0, 47);
+    const upperWindDirection = lastTwoDayWindUpperStation.map((day) => {
+      return day.windDirAvg;
+    })
+    const upperWindSpeed = lastTwoDayWindUpperStation.map((day) => {
+      return day.windSpeedAvg;
+    })
+    const lastTwoDayWindLowerStation = lowerStationData.slice(0, 47);
+
+    const lowerWindDirection = lastTwoDayWindLowerStation.map((day) => {
+      return day.windDirAvg;
+    })
+    const lowerWindSpeed = lastTwoDayWindLowerStation.map((day) => {
+      return day.windSpeedAvg;
+    })
+    setWind(
+      {
+        upperStationWindDirection: upperWindDirection,
+        upperStationWindSpeed: upperWindSpeed,
+        lowerStationWindDirection: lowerWindDirection,
+        lowerStationWindSpeed: lowerWindSpeed,
+      })
+  }, [lowerStationData, upperStationData])
+
   return (
     <Container>
       <div className="dashboard">
@@ -218,6 +253,12 @@ const Main = (props) => {
             lowElevation={lowerStationElevation}
             highTemp={upperStationTemp}
             lowTemp={lowerStationTemp} />
+        </div>
+        <div className="item-column">
+          <WindChart wind={wind} />
+        </div>
+        <div className="item-column">
+          <WindChart wind={wind} />
         </div>
         <div className="item-half">
           <SnowDetails

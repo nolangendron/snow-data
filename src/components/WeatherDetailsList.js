@@ -86,6 +86,6 @@ export const WeatherDetailsList = ({ highElevationName, lowElevationName, highEl
           <h1>{lowTemp} {String.fromCharCode(176)}C</h1>
         </div>
       </div>
-    </Weather >
+    </Weather>
   )
 }
