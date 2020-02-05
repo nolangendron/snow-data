@@ -21,6 +21,19 @@ box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
   transform: rotate(-45deg);
 }
 
+button {
+  background: grey;
+  color: white;
+  padding: 10px;
+}
+ .windSpeed {
+   position: relative;
+ }
+ .title {
+  width: 100%;
+  text-align: center;
+  margin: 15px;
+}
 `
 
 const data = {
@@ -39,7 +52,7 @@ const options = {
 
   circumference: Math.PI * 2,
   rotation: Math.PI,
-  cutoutPercentage: 80, // precent
+  cutoutPercentage: 80,
   plugins: {
     datalabels: {
       backgroundColor: 'rgba(0, 0, 0, 0.7)',
@@ -67,8 +80,15 @@ const options = {
   }
 }
 
-export const WindChart = ({ wind }) => {
-  const { upperStationWindDirection, upperStationWindSpeed, lowerStationWindDirection, lowerStationWindSpeed } = wind;
+export const WindChart = ({ windUpper, windLower }) => {
+
+  const lowerWindDirection = windLower && windLower.lowerStationWindDirection;
+  const lowerWindSpeed = windLower && windLower.lowerStationWindSpeed;
+  const upperWindDirection = windUpper && windUpper.upperStationWindDirection;
+  const upperWindSpeed = windUpper && windUpper.upperStationWindSpeed;
+
+  const windDirection = windUpper ? upperWindDirection : lowerWindDirection;
+  const windSpeed = windUpper ? upperWindSpeed : lowerWindSpeed;
 
   const [rotation, setRotation] = useState({
     rotate: false,
@@ -82,22 +102,21 @@ export const WindChart = ({ wind }) => {
           degree: arr1[i],
         })
         data.datasets[0].data = [arr2[i] * 5, 360]
-      }, i * 200);
+      }, i * 100);
     }
   }
 
-
   return (
     <Wind>
+      <h2 className="title">48 Hour Wind</h2>
       <Doughnut data={data} options={options} />
       <FontAwesomeIcon className='locationArrow' transform={{ rotate: rotation.degree }} size='3x' color='red' icon={faLocationArrow} />
       <div>
-        <button onClick={() => windDirectionLastTwoDays(upperStationWindDirection, upperStationWindSpeed)}>click</button>
+        <button onClick={() => windDirectionLastTwoDays(windDirection, windSpeed)}>click</button>
       </div>
-      <div>
+      <div className='windSpeed'>
         <h3>{data.datasets[0].data[0] / 5} km/h</h3>
       </div>
-
     </Wind >
   )
 }

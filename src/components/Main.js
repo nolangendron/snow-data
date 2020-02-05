@@ -65,10 +65,14 @@ const Main = (props) => {
     upperStationLastWeek: null,
   });
   const [wind, setWind] = useState({
-    upperStationWindDirection: [],
-    upperStationWindSpeed: [],
-    lowerStationWindDirection: [],
-    lowerStationWindSpeed: []
+    upperStation: {
+      upperStationWindDirection: [],
+      upperStationWindSpeed: [],
+    },
+    lowerStation: {
+      lowerStationWindDirection: [],
+      lowerStationWindSpeed: []
+    }
   })
   const [historicSnowData, setHistoricSnowData] = useState(
     {
@@ -89,7 +93,6 @@ const Main = (props) => {
       const url = `https://wx.avalanche.ca/stations/${station}/measurements/`;
       const response = await fetch(url);
       const data = await response.json();
-      console.log("lower", data)
       setLowerStationData(data);
     }
 
@@ -104,8 +107,6 @@ const Main = (props) => {
       const url = `https://wx.avalanche.ca/stations/${station}/measurements/`;
       const response = await fetch(url);
       const data = await response.json();
-      console.log("upper", data)
-
       setUpperStationData(data)
     }
 
@@ -234,13 +235,16 @@ const Main = (props) => {
     })
     setWind(
       {
-        upperStationWindDirection: upperWindDirection,
-        upperStationWindSpeed: upperWindSpeed,
-        lowerStationWindDirection: lowerWindDirection,
-        lowerStationWindSpeed: lowerWindSpeed,
+        upperStation: {
+          upperStationWindDirection: upperWindDirection,
+          upperStationWindSpeed: upperWindSpeed,
+        },
+        lowerStation: {
+          lowerStationWindDirection: lowerWindDirection,
+          lowerStationWindSpeed: lowerWindSpeed,
+        }
       })
   }, [lowerStationData, upperStationData])
-
   return (
     <Container>
       <div className="dashboard">
@@ -255,10 +259,16 @@ const Main = (props) => {
             lowTemp={lowerStationTemp} />
         </div>
         <div className="item-column">
-          <WindChart wind={wind} />
+          <WindChart
+            windLower={wind.lowerStation}
+            lowElevationName={lowerStationName}
+            lowElevation={lowerStationElevation} />
         </div>
         <div className="item-column">
-          <WindChart wind={wind} />
+          <WindChart
+            windUpper={wind.upperStation}
+            highElevationName={upperStationName}
+            highElevation={upperStationElevation} />
         </div>
         <div className="item-half">
           <SnowDetails
