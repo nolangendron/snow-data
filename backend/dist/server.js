@@ -11,7 +11,13 @@ var _bodyParser = require("body-parser");
 
 var _morgan = _interopRequireDefault(require("morgan"));
 
+var _config = _interopRequireDefault(require("./config"));
+
 var _cors = _interopRequireDefault(require("cors"));
+
+var _db = require("./utils/db");
+
+var _historicWeather = _interopRequireDefault(require("./resources/historicWeather/historicWeather.router"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24,22 +30,17 @@ app.use((0, _bodyParser.urlencoded)({
   extended: true
 }));
 app.use((0, _morgan.default)('dev'));
-app.get('/', (req, res) => {
-  res.json({
-    message: 'data'
-  });
-});
-app.post('/', (req, res) => {
-  console.log(req.body);
-  res.send({
-    message: 'ok'
-  });
-});
+app.use('/api/historicWeather', _historicWeather.default);
 
-const start = () => {
-  app.listen(8080, () => {
-    console.log('server is on 8080');
-  });
+const start = async () => {
+  try {
+    await (0, _db.connect)();
+    app.listen(_config.default.port, () => {
+      console.log(`REST API on http://localhost:${_config.default.port}/api`);
+    });
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 exports.start = start;

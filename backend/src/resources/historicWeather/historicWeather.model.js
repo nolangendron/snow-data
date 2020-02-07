@@ -12,14 +12,24 @@ const historicWeatherSchema = new mongoose.Schema(
     },
     newSnow: {
       type: Number,
-      require: true
+      required: true
     },
     snowPack: {
       type: Number,
+      required: true
+    },
+    station: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'station',
       required: true
     }
   },
   { timestamps: true }
 )
 
-export const Station = mongoose.model('historicWeather', historicWeatherSchema)
+historicWeatherSchema.index({ date: 1, station: 1 }, { unique: true })
+
+export const HistoricWeather = mongoose.model(
+  'historicWeather',
+  historicWeatherSchema
+)
