@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import styled from "@emotion/styled";
 import size from "../styles/size";
 import colors from '../styles/colors';
+import { Title } from './Title';
 import { WeatherDetailsList } from './WeatherDetailsList';
 import { SnowDetails } from './SnowDetails';
 import { calNewSnowLastDay } from '../utils/calNewSnowLastDay';
@@ -49,10 +50,13 @@ const Container = styled("main")`
     .item-full {
       flex-basis: 100%;
       grid-column: 1 / -1;
+      background: rgb(244,247,250, 0.7);
+
     }
 `
 const Main = (props) => {
   const { name } = props;
+  console.log("name", name)
 
   const [lowerStationData, setLowerStationData] = useState([]);
   const [upperStationData, setUpperStationData] = useState([]);
@@ -86,7 +90,6 @@ const Main = (props) => {
     }
   )
   const lowerWeather = name && stationNumbers[name].lower;
-
   useEffect(() => {
     const getWeather = async (station) => {
 
@@ -167,6 +170,7 @@ const Main = (props) => {
   const upperSeasonData = name && stationNumbers[name].seasonDataUpper;
   const lowerLabel = name && stationNumbers[name].elevationLower;
   const upperLabel = name && stationNumbers[name].elevationUpper;
+
   useEffect(() => {
     const getSnowPackData = (arr) => {
       const dataArray = [];
@@ -248,8 +252,25 @@ const Main = (props) => {
   return (
     <Container>
       <div className="dashboard">
+        <div className="item-half">
+          <SnowDetails
+            lowElevationName={lowerStationName}
+            lowElevation={lowerStationElevation}
+            newSnowLastDayLower={lowerStationNewSnowLastDay}
+            newSnowLastTwoDayLower={lowerStationNewSnowLastTwoDay}
+            newSnowLastWeekLower={lowerStationNewSnowLastWeek}
+            snowDepthLower={lowerStationSnowDepth}
+            highElevationName={upperStationName}
+            highElevation={upperStationElevation}
+            newSnowLastDayUpper={upperStationNewSnowLastDay}
+            newSnowLastTwoDayUpper={upperStationNewSnowTwoDay}
+            newSnowLastWeekUpper={upperStationNewSnowLastWeek}
+            snowDepthUpper={upperStationSnowDepth} />
+        </div>
         <div className="item-column">
-          {/* <div className="card"> */}
+          <Title />
+        </div>
+        <div className="item-column">
           <WeatherDetailsList
             highElevationName={upperStationName}
             highElevation={upperStationElevation}
@@ -270,21 +291,7 @@ const Main = (props) => {
             highElevationName={upperStationName}
             highElevation={upperStationElevation} />
         </div>
-        <div className="item-half">
-          <SnowDetails
-            lowElevationName={lowerStationName}
-            lowElevation={lowerStationElevation}
-            newSnowLastDayLower={lowerStationNewSnowLastDay}
-            newSnowLastTwoDayLower={lowerStationNewSnowLastTwoDay}
-            newSnowLastWeekLower={lowerStationNewSnowLastWeek}
-            snowDepthLower={lowerStationSnowDepth}
-            highElevationName={upperStationName}
-            highElevation={upperStationElevation}
-            newSnowLastDayUpper={upperStationNewSnowLastDay}
-            newSnowLastTwoDayUpper={upperStationNewSnowTwoDay}
-            newSnowLastWeekUpper={upperStationNewSnowLastWeek}
-            snowDepthUpper={upperStationSnowDepth} />
-        </div>
+
         <div className="item-full">
           <div className="card">
             <Chart data={historicSnowData.data} />

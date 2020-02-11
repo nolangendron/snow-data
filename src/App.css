@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
 *,
 *::before,
 *::after {
@@ -8,6 +8,6 @@
 body {
   height: 100%;
   overflow-x: hidden;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Raleway', sans-serif;
 
 }

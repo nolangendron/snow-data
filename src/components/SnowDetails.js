@@ -10,7 +10,7 @@ flex-direction: row;
 flex-wrap: wrap;
 justify-content: space-around;
 align-content: center;
-background: #fff;
+background: rgb(244,247,250, 0.7);
 box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
 
 h1{

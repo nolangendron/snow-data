@@ -1,6 +1,6 @@
 export default {
   navbar: "#313541",
-  main: "#f4f7fa",
+  main: "rgb(244,247,250, 0.0)",
   footer: "#1d2127",
-  card: "fff"
+  card: "rgb(244,247,250, 0.0)"
 }

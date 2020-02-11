@@ -12,25 +12,33 @@ flex-direction: row;
 flex-wrap: wrap;
 justify-content: center;
 align-content: center;
-background: #fff;
+background: rgb(244,247,250, 0.7);
 box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
 
 .locationArrow {
   position: absolute;
   align-self: center;
-  margin-top: 20px;
+  margin-top: 8px;
   transform: rotate(-45deg);
 }
 
+.wind {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+ }
+
 button {
+  margin-left: 10px;
   background: grey;
   color: white;
-  margin-top: 10px;
-  padding: 10px;
 }
- .windSpeed {
-   position: relative;
- }
+
+.windSpeed {
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
  .title {
   width: 100%;
   text-align: center;
@@ -46,23 +54,23 @@ h3 {
 
 .north {
   position: absolute;
-	left: 48%; top: 35%;
+	left: 49%; top: 25%;
 }
 /* South */
 .south {
   position: absolute;
-	left: 48%; bottom: 26%;
+	left: 49%; bottom: 26%;
 }
 
 /* East */
 .east {
   position: absolute;
-	right: 31%; top: 52%;
+	right: 31%; top: 48%;
 }
 /* West */
 .west {
   position: absolute;
-	left: 31%; top: 52%;
+	left: 31%; top: 48%;
 }
 `
 
@@ -113,14 +121,6 @@ export const WindChart = ({ lowElevationName, highElevationName, windUpper, wind
         offset: 10,
         borderRadius: 4,
         borderWidth: 1,
-        formatter: function (value, context) {
-          var i = context.dataIndex;
-          var len = context.dataset.data.length - 1;
-          if (i === len) {
-            return null;
-          }
-          return value + ' mph';
-        }
       }
     },
     legend: {
@@ -161,9 +161,6 @@ export const WindChart = ({ lowElevationName, highElevationName, windUpper, wind
   return (
     <Wind>
       <h3 className="title">{stationName ? stationName : 'Station'}</h3>
-      <div className='windSpeed'>
-        <h3>{data.datasets[0].data[0] ? data.datasets[0].data[0] / 5 : 0} km/h</h3>
-      </div>
       <Doughnut data={data} options={options} />
       <FontAwesomeIcon className='locationArrow' transform={{ rotate: rotation.degree }} size='2x' color='red' icon={faLocationArrow} />
       <span className='north'>N</span>
@@ -171,8 +168,9 @@ export const WindChart = ({ lowElevationName, highElevationName, windUpper, wind
       <span className='south'>S</span>
       <span className='west'>W</span>
 
-      <div>
+      <div className="wind">
         <button onClick={() => windDirectionLastTwoDays(windDirection, windSpeed)}>48hr Playback</button>
+        <h3 className="windSpeed">{data.datasets[0].data[0] ? data.datasets[0].data[0] / 5 : 0} km/h</h3>
       </div>
 
     </Wind >
