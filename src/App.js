@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import styled from "@emotion/styled";
-import size from "../src/styles/size";
 import Main from './components/Main';
 import CardList from "./components/CardList";
 import img from './images/Thar_Peak.jpg';
-
-
+import { Burger } from './components/Burger/Burger';
+import Menu from './components/Menu/Menu';
 
 const Container = styled("div")`
 margin: 0;
@@ -15,10 +14,13 @@ background: url(${img}) no-repeat center center fixed;
 background-size: cover;
 `
 function App() {
+  const [open, setOpen] = useState(false);
+
   return (
     <Container>
+      <Burger open={open} setOpen={setOpen} />
+      <Menu open={open} setOpen={setOpen} />
       <Main />
-      <CardList />
     </Container >
   );
 }

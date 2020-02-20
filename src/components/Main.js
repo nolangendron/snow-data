@@ -11,6 +11,7 @@ import { Chart } from '../components/Chart';
 import { stationNumbers } from '../data/weatherStationDetails';
 import { WindChart } from './WindChart';
 
+
 const Container = styled("main")`
     overflow-y: auto;
     overflow-x: hidden;
@@ -38,7 +39,7 @@ const Container = styled("main")`
       padding: calc(var(${size.spacing}) / 2);
     }
 
-    .item-full {
+    .snow-chart {
       grid-column: 1 / -1;
       background: rgb(244,247,250, 0.7);
 
@@ -52,8 +53,9 @@ const Container = styled("main")`
       "snowConditions"
       "weather"
       "wind1"
-      "wind2";
-    grid-template-rows: 350px 350px 350px 350px 350px;
+      "wind2"
+      "snowChart";
+    grid-template-rows: 350px 350px 350px 350px 350px 1fr;
     grid-template-columns: 1fr;
     justify-items: center;
   } 
@@ -78,6 +80,10 @@ const Container = styled("main")`
     width: 380px;
     grid-area: wind2;
   }
+  .snow-chart {
+    width: 95%;
+    grid-area: snowChart;
+  }
 }
 
 @media only screen and (min-width: 850px) and (max-width: 1300px) {
@@ -86,8 +92,9 @@ const Container = styled("main")`
     grid-template-areas: 
       "snowConditions title"
       "weather weather"
-      "wind1 wind2";
-    grid-template-rows: 350px 350px 350px;
+      "wind1 wind2"
+      "snowChart snowChart";
+    grid-template-rows: 350px 350px 350px 1fr;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
     margin: 20px;
@@ -114,6 +121,10 @@ const Container = styled("main")`
     width: 380px;
     grid-area: wind2;
   }
+  .snow-chart {
+    width: 95%;
+    grid-area: snowChart;
+  }
 }
 
 @media only screen and (min-width: 1301px) {
@@ -121,8 +132,9 @@ const Container = styled("main")`
     display: grid;
     grid-template-areas: 
       "snowConditions snowConditions title"
-      "weather wind1 wind2";
-    grid-template-rows: 350px 350px;
+      "weather wind1 wind2"
+      "snowChart snowChart snowChart";
+    grid-template-rows: 350px 350px 1fr;;
     grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
     margin: 20px;
@@ -149,15 +161,15 @@ const Container = styled("main")`
     width: 380px;
     grid-area: wind2;
   }
+  .snow-chart {
+    width: 95%;
+    grid-area: snowChart;
+  }
 }
-    
-
-
     
 `
 const Main = (props) => {
   const { name } = props;
-  console.log("name", name)
 
   const [lowerStationData, setLowerStationData] = useState([]);
   const [upperStationData, setUpperStationData] = useState([]);
@@ -393,11 +405,11 @@ const Main = (props) => {
             highElevation={upperStationElevation} />
         </div>
 
-        {/* <div className="item-full">
+        <div className="snow-chart">
           <div className="card">
             <Chart data={historicSnowData.data} />
           </div>
-        </div> */}
+        </div>
       </div >
     </Container >
   )
