@@ -12,47 +12,148 @@ import { stationNumbers } from '../data/weatherStationDetails';
 import { WindChart } from './WindChart';
 
 const Container = styled("main")`
-    flex: 1;
-    grid-area: main;
-    padding: ${size.spacing};
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    background-color: ${colors.main};
 
     .dashboard {
-      --column-count: 3;
       display: grid;
-      grid-template-columns: repeat(var(--column-count), 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
       grid-gap: ${size.spacing};
     }
 
     .column-item {
-      --column-count: 3;
-      flex-basis: calc(100%/var(--column-count));
       grid-column-end: span 1;
     }
 
     .item-column {
-      flex: 1 1 50%;
       grid-column-end: span 1;
       padding: calc(var(${size.spacing}) / 2);
       height: 320px;
     }
 
-    .item-half {
-      flex: 1 1 50%;
+    .snow-conditions {
       height: 320px;
       grid-column-end: span 2;
       padding: calc(var(${size.spacing}) / 2);
     }
 
     .item-full {
-      flex-basis: 100%;
       grid-column: 1 / -1;
       background: rgb(244,247,250, 0.7);
 
     }
+
+@media only screen and (max-width: 849px) {
+  .dashboard {
+    display: grid;
+    grid-template-areas: 
+      "title"
+      "snowConditions"
+      "weather"
+      "wind1"
+      "wind2";
+    grid-template-rows: 350px 350px 350px 350px 350px;
+    grid-template-columns: 1fr;
+    justify-items: center;
+  } 
+  .title {
+    width: 380px;
+    margin-top: 20px;
+    grid-area: title;
+  }
+  .snow-conditions {
+    width: 380px;
+    grid-area: snowConditions;
+  } 
+  .weather {
+    width: 380px;
+    grid-area: weather;
+  }
+  .wind-chart1 {
+    width: 380px;
+    grid-area: wind1;
+  }
+  .wind-chart2 {
+    width: 380px;
+    grid-area: wind2;
+  }
+}
+
+@media only screen and (min-width: 850px) and (max-width: 1300px) {
+  .dashboard {
+    display: grid;
+    grid-template-areas: 
+      "snowConditions title"
+      "weather weather"
+      "wind1 wind2";
+    grid-template-rows: 350px 350px 350px;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    margin: 20px;
+  } 
+  .title {
+    margin-top: 20px;
+    width: 380px;
+    grid-area: title;
+  }
+  .snow-conditions {
+    grid-area: snowConditions;
+    height: 100%;
+    width: 380px;
+  } 
+  .weather {
+    grid-area: weather;
+    width: 380px;
+  }
+  .wind-chart1 {
+    width: 380px;
+    grid-area: wind1;
+  }
+  .wind-chart2 {
+    width: 380px;
+    grid-area: wind2;
+  }
+}
+
+@media only screen and (min-width: 1301px) {
+  .dashboard {
+    display: grid;
+    grid-template-areas: 
+      "snowConditions snowConditions title"
+      "weather wind1 wind2";
+    grid-template-rows: 350px 350px;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    margin: 20px;
+  } 
+  .title {
+    margin-top: 20px;
+    width: 380px;
+    grid-area: title;
+  }
+  .snow-conditions {
+    grid-area: snowConditions;
+    height: 100%;
+    grid-column: span 2;
+  } 
+  .weather {
+    grid-area: weather;
+    width: 380px;
+  }
+  .wind-chart1 {
+    width: 380px;
+    grid-area: wind1;
+  }
+  .wind-chart2 {
+    width: 380px;
+    grid-area: wind2;
+  }
+}
+    
+
+
+    
 `
 const Main = (props) => {
   const { name } = props;
@@ -252,7 +353,7 @@ const Main = (props) => {
   return (
     <Container>
       <div className="dashboard">
-        <div className="item-half">
+        <div className="snow-conditions">
           <SnowDetails
             lowElevationName={lowerStationName}
             lowElevation={lowerStationElevation}
@@ -267,10 +368,10 @@ const Main = (props) => {
             newSnowLastWeekUpper={upperStationNewSnowLastWeek}
             snowDepthUpper={upperStationSnowDepth} />
         </div>
-        <div className="item-column">
+        <div className="title">
           <Title />
         </div>
-        <div className="item-column">
+        <div className="weather">
           <WeatherDetailsList
             highElevationName={upperStationName}
             highElevation={upperStationElevation}
@@ -279,24 +380,24 @@ const Main = (props) => {
             highTemp={upperStationTemp}
             lowTemp={lowerStationTemp} />
         </div>
-        <div className="item-column">
+        <div className="wind-chart1">
           <WindChart
             windLower={wind.lowerStation}
             lowElevationName={lowerStationName}
             lowElevation={lowerStationElevation} />
         </div>
-        <div className="item-column">
+        <div className="wind-chart2">
           <WindChart
             windUpper={wind.upperStation}
             highElevationName={upperStationName}
             highElevation={upperStationElevation} />
         </div>
 
-        <div className="item-full">
+        {/* <div className="item-full">
           <div className="card">
             <Chart data={historicSnowData.data} />
           </div>
-        </div>
+        </div> */}
       </div >
     </Container >
   )

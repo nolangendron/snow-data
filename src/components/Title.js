@@ -2,7 +2,7 @@ import React from 'react'
 import styled from "@emotion/styled";
 
 const Container = styled("div")`
-  grid-area: main;
+  grid-area: title;
 
 .title {
   /* padding: 50px; */
@@ -11,8 +11,8 @@ const Container = styled("div")`
 
 h1 {
   justify-content: flex-end;
-  font-size: 4em;
-line-height: 1.25em;
+  font-size: 3.3em;
+  line-height: 1.25em;
   color: #fff;
 }
 `

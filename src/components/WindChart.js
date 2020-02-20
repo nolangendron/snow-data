@@ -54,7 +54,7 @@ h3 {
 
 .north {
   position: absolute;
-	left: 49%; top: 25%;
+	left: 49%; top: 32%;
 }
 /* South */
 .south {
@@ -65,12 +65,12 @@ h3 {
 /* East */
 .east {
   position: absolute;
-	right: 31%; top: 48%;
+	right: 32%; top: 50%;
 }
 /* West */
 .west {
   position: absolute;
-	left: 31%; top: 48%;
+	left: 32%; top: 50%;
 }
 `
 
@@ -142,7 +142,6 @@ export const WindChart = ({ lowElevationName, highElevationName, windUpper, wind
 
   const windDirectionLastTwoDays = (arr1, arr2) => {
     for (let i = 0; i < arr1.length + 1; i++) {
-      console.log(i)
       if (i === arr1.length + 1) {
         clearState();
       } else {

@@ -5,12 +5,10 @@ import styled from "@emotion/styled";
 import { Card } from './Card';
 
 const CardListContainer = styled("div")`
-grid-area: footer;
 display: flex;
 flex-direction: row;
 justify-content: space-around;
 width: 100%;
-height: 100px;
 `
 const areas = ['coquihalla', 'duffey', 'manning'];
 

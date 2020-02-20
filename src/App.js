@@ -6,24 +6,20 @@ import Main from './components/Main';
 import CardList from "./components/CardList";
 import img from './images/Thar_Peak.jpg';
 
-const GridContainer = styled("div")`
-display: grid;
-height: 100vh;
-grid-template-rows: 1fr 1fr ${size.footerHeight};
-grid-template-areas: "main main main"
-                     "main main main"
-                     "footer footer footer";                     
-background: url(${img}) no-repeat center center fixed;
-background-size: cover;
+
+
+const Container = styled("div")`
 margin: 0;
 padding: 0;
+background: url(${img}) no-repeat center center fixed;
+background-size: cover;
 `
 function App() {
   return (
-    <GridContainer>
+    <Container>
       <Main />
       <CardList />
-    </GridContainer >
+    </Container >
   );
 }
 
