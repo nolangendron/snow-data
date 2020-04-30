@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from "@emotion/styled";
 import size from "../styles/size";
-import colors from '../styles/colors';
 import { Title } from './Title';
 import { WeatherDetailsList } from './WeatherDetailsList';
 import { SnowDetails } from './SnowDetails';
@@ -13,6 +12,7 @@ import { WindChart } from './WindChart';
 
 
 const Container = styled("main")`
+    padding-top: 80px;
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
@@ -223,6 +223,7 @@ const Main = (props) => {
       const url = `https://wx.avalanche.ca/stations/${station}/measurements/`;
       const response = await fetch(url);
       const data = await response.json();
+      console.log(data)
       setUpperStationData(data)
     }
 

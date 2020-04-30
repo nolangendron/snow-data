@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { Doughnut } from 'react-chartjs-2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationArrow } from '@fortawesome/free-solid-svg-icons';
+import { faSnowflake } from '@fortawesome/free-solid-svg-icons';
 
 const Wind = styled("div")` 
 display: flex;
@@ -159,6 +160,7 @@ export const WindChart = ({ lowElevationName, highElevationName, windUpper, wind
 
   return (
     <Wind>
+      {/* <h2 className="title">Snow Conditions</h2><FontAwesomeIcon icon={faSnowflake} size='3x' color='#505865' /> */}
       <h3 className="title">{stationName ? stationName : 'Station'}</h3>
       <Doughnut data={data} options={options} />
       <FontAwesomeIcon className='locationArrow' transform={{ rotate: rotation.degree }} size='2x' color='red' icon={faLocationArrow} />

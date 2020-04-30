@@ -5,6 +5,8 @@ import { faSnowflake } from '@fortawesome/free-solid-svg-icons';
 
 const SnowDetailsList = styled("div")`
 grid-area: snowConditions;
+margin-left: 60px;
+margin-right: 60px;
 display: flex;
 height: 100%;
 flex-direction: row;

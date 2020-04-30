@@ -5,7 +5,8 @@ const Container = styled("div")`
   grid-area: title;
 
 .title {
-  /* padding: 50px; */
+  margin: 0;
+  padding: 0;
   text-align: right;
 }
 

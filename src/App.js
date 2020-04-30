@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './App.css';
 import styled from "@emotion/styled";
 import Main from './components/Main';
-import CardList from "./components/CardList";
 import img from './images/Thar_Peak.jpg';
 import { Burger } from './components/Burger/Burger';
 import Menu from './components/Menu/Menu';

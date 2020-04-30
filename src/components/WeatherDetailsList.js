@@ -73,7 +73,7 @@ p {
 export const WeatherDetailsList = ({ highElevationName, lowElevationName, highElevation, lowElevation, highTemp, lowTemp }) => {
   return (
     <Weather>
-      <h2 className="title">Current Weather</h2> <FontAwesomeIcon icon={faTemperatureLow} size='3x' color='#505865' />
+      <h2 className="title">Current Temperature</h2> <FontAwesomeIcon icon={faTemperatureLow} size='3x' color='#505865' />
       <h3 className="title">{highElevationName} {highElevation}</h3>
       <div className="flex-item">
         <div className="weather-value">
