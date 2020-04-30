@@ -12,7 +12,7 @@ import { WindChart } from './WindChart';
 
 
 const Container = styled("main")`
-    padding-top: 80px;
+    padding-top: 81px;
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
