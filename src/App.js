@@ -11,6 +11,11 @@ margin: 0;
 padding: 0;
 background: url(${img}) no-repeat center center fixed;
 background-size: cover;
+
+@media only screen and (max-width: 600px) {
+  background: none;
+}
+
 `
 function App() {
   const [open, setOpen] = useState(false);
